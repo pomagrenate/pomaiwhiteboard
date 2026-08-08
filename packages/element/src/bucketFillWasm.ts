@@ -1,102 +1,48 @@
-import type { GlobalPoint } from "@excalidraw/math";
+import { getPORenderWASM } from "./wasmLoader";
 
-export interface WASMFloodFillParams {
-  pixels: Uint8ClampedArray;
-  width: number;
-  height: number;
-  startX: number;
-  startY: number;
-  fillColor: number; // 0xRRGGBBAA
-  targetColor: number;
-  tolerance: number;
+export interface BucketFillOptions {
+  tolerance?: number;
 }
 
-export interface WASMFloodFillResult {
-  ok: boolean;
-  filledPixelCount: number;
-  contourPoints: GlobalPoint[];
-}
+export async function executeWasmBucketFill(
+  imageData: ImageData,
+  startX: number,
+  startY: number,
+  fillColor: [number, number, number, number],
+  options: BucketFillOptions = {},
+): Promise<number> {
+  const wasm = await getPORenderWASM();
+  const width = imageData.width;
+  const height = imageData.height;
 
-/**
- * Execute WASM C++ SIMD Flood Fill algorithm.
- * Operates directly on contiguous pixel memory buffers.
- */
-export function executeWasmFloodFill(
-  params: WASMFloodFillParams,
-): WASMFloodFillResult {
-  const { pixels, width, height, startX, startY, fillColor, tolerance } = params;
+  const numPixels = width * height;
+  const numBytes = numPixels * 4;
 
-  if (startX < 0 || startX >= width || startY < 0 || startY >= height) {
-    return { ok: false, filledPixelCount: 0, contourPoints: [] };
-  }
+  const ptr = wasm._malloc(numBytes);
+  const u32Heap = new Uint32Array(wasm.HEAPU32.buffer, ptr, numPixels);
+  const source32 = new Uint32Array(imageData.data.buffer);
 
-  // Uint32 pixel view over RGBA byte buffer
-  const uint32View = new Uint32Array(
-    pixels.buffer,
-    pixels.byteOffset,
-    pixels.byteLength >> 2,
+  u32Heap.set(source32);
+
+  const fill32 =
+    (fillColor[0] << 24) |
+    (fillColor[1] << 16) |
+    (fillColor[2] << 8) |
+    fillColor[3];
+
+  const filledCount = wasm._po_wasm_bucket_fill(
+    ptr,
+    width,
+    height,
+    startX,
+    startY,
+    fill32,
+    0,
+    options.tolerance || 0.1,
   );
 
-  const startIndex = startY * width + startX;
-  const originColor = uint32View[startIndex];
+  imageData.data.set(new Uint8ClampedArray(wasm.HEAPU32.buffer, ptr, numBytes));
+  wasm._free(ptr);
 
-  if (originColor === fillColor && tolerance <= 0) {
-    return { ok: false, filledPixelCount: 0, contourPoints: [] };
-  }
-
-  // Scanline flood fill in Uint32 memory space
-  let filledCount = 0;
-  const visited = new Uint8Array(width * height);
-  const stack: [number, number, number, number][] = [];
-
-  stack.push([startY, startX, startX, 1]);
-  stack.push([startY, startX, startX, -1]);
-
-  while (stack.length > 0) {
-    const [y, x1, x2, dy] = stack.pop()!;
-    const ny = y + dy;
-    if (ny < 0 || ny >= height) {
-      continue;
-    }
-
-    let x = x1;
-    while (x <= x2) {
-      const idx = ny * width + x;
-      if (x >= 0 && x < width && !visited[idx] && uint32View[idx] === originColor) {
-        let left = x;
-        while (left >= 0 && uint32View[ny * width + left] === originColor) {
-          visited[ny * width + left] = 1;
-          uint32View[ny * width + left] = fillColor;
-          filledCount++;
-          left--;
-        }
-        left++;
-
-        let right = x;
-        while (right < width && uint32View[ny * width + right] === originColor) {
-          visited[ny * width + right] = 1;
-          uint32View[ny * width + right] = fillColor;
-          filledCount++;
-          right++;
-        }
-        right--;
-
-        stack.push([ny, left, right, dy]);
-        if (left < x1) {
-          stack.push([ny, left, x1 - 1, -dy]);
-        }
-        if (right > x2) {
-          stack.push([ny, x2 + 1, right, -dy]);
-        }
-        x = right;
-      }
-      x++;
-    }
-  }
-
-  return {
-    ok: filledCount > 0,
-    filledPixelCount: filledCount,
-    contourPoints: [],
-  };
+  return filledCount;
 }

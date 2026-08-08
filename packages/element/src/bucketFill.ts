@@ -1,5 +1,6 @@
 import { pointsOnBezierCurves, simplify } from "points-on-curve";
 import { curveToBezier } from "points-on-curve/lib/curve-to-bezier";
+import { executeWasmBucketFill } from "./bucketFillWasm";
 
 import {
   distanceToLineSegment,

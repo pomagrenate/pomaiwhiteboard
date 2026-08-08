@@ -67,6 +67,7 @@ export * from "./pathGeneratorWasm";
 export * from "./sceneGraphWasm";
 export * from "./poRenderBridge";
 export * from "./elbowArrowWasm";
+export * from "./wasmLoader";
 export * from "./collision";
 export * from "./comparisons";
 export * from "./containerCache";
