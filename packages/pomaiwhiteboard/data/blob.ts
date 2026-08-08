@@ -185,13 +185,17 @@ export const loadSceneOrLibraryFromBlob = async (
             {
               theme: localAppState?.theme,
               fileHandle: fileHandle || blob.handle || null,
+              width: localAppState?.width || 0,
+              height: localAppState?.height || 0,
+              offsetTop: localAppState?.offsetTop || 0,
+              offsetLeft: localAppState?.offsetLeft || 0,
               ...cleanAppStateForExport(data.appState || {}),
               ...(localAppState
                 ? getScrollToContentState(data.elements || [], localAppState)
                 : {}),
             },
             localAppState,
-          ),
+          ) as AppState,
           files: data.files || {},
         },
       };

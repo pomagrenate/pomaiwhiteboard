@@ -1,3 +1,4 @@
+// @ts-ignore
 import PORenderModule from "./wasm/po_render.js";
 
 export interface PORenderWASMInstance {

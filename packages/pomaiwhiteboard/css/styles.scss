@@ -1,5 +1,6 @@
 @use "./variables.module" as *;
 @use "./theme";
+@use "./pomaiTheme";
 
 :root {
   --zIndex-canvas: 1;

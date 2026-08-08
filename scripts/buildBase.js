@@ -14,6 +14,9 @@ const getConfig = (outdir) => ({
     "@excalidraw/utils": path.resolve(__dirname, "../packages/utils/src"),
   },
   external: [
+    "fs",
+    "path",
+    "crypto",
     "@excalidraw/common",
     "@excalidraw/element",
     "@excalidraw/math",

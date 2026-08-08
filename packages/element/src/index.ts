@@ -61,7 +61,7 @@ export * from "./arrowEndpointText";
 export * from "./binding";
 export * from "./bounds";
 export * from "./bucketFill";
-export * from "./bucketFillWasm";
+export { executeWasmBucketFill } from "./bucketFillWasm";
 export * from "./spatialIndexWasm";
 export * from "./pathGeneratorWasm";
 export * from "./sceneGraphWasm";

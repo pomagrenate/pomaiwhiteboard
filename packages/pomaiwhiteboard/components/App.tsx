@@ -13119,7 +13119,7 @@ class App extends React.Component<AppProps, AppState> {
         ret.type === MIME_TYPES.excalidraw
       ) {
         // restore the fractional indices by mutating elements
-        syncInvalidIndices(elements.concat(ret.data.elements));
+        syncInvalidIndices(elements.concat(ret.data.elements as any));
 
         // don't capture and only update the store snapshot for old elements,
         // otherwise we would end up with duplicated fractional indices on undo
