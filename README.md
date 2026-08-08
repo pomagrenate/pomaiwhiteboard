@@ -1,124 +1,111 @@
-<a href="https://excalidraw.com/" target="_blank" rel="noopener">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" alt="Excalidraw" srcset="https://excalidraw.nyc3.cdn.digitaloceanspaces.com/github/excalidraw_github_cover_2_dark.png" />
-    <img alt="Excalidraw" src="https://excalidraw.nyc3.cdn.digitaloceanspaces.com/github/excalidraw_github_cover_2.png" />
-  </picture>
-</a>
-
-<h4 align="center">
-  <a href="https://excalidraw.com">Excalidraw Editor</a> |
-  <a href="https://plus.excalidraw.com/blog">Blog</a> |
-  <a href="https://docs.excalidraw.com">Documentation</a> |
-  <a href="https://plus.excalidraw.com">Excalidraw+</a>
-</h4>
-
 <div align="center">
-  <h2>
-    An open source virtual hand-drawn style whiteboard. </br>
-    Collaborative and end-to-end encrypted. </br>
-  <br />
-  </h2>
-</div>
+  <img src="public/og-image-3.png" alt="Pomai Whiteboard Banner" width="100%" />
 
-<br />
-<p align="center">
-  <a href="https://github.com/excalidraw/excalidraw/blob/master/LICENSE">
-    <img alt="Excalidraw is released under the MIT license." src="https://img.shields.io/badge/license-MIT-blue.svg"  /></a>
-  <a href="https://www.npmjs.com/package/@excalidraw/excalidraw">
-    <img alt="npm downloads/month" src="https://img.shields.io/npm/dm/@excalidraw/excalidraw"  /></a>
-  <a href="https://docs.excalidraw.com/docs/introduction/contributing">
-    <img alt="PRs welcome!" src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat"  /></a>
-  <a href="https://discord.gg/UexuTaE">
-    <img alt="Chat on Discord" src="https://img.shields.io/discord/723672430744174682?color=738ad6&label=Chat%20on%20Discord&logo=discord&logoColor=ffffff&widget=false"/></a>
-  <a href="https://deepwiki.com/excalidraw/excalidraw">
-    <img alt="Ask DeepWiki" src="https://deepwiki.com/badge.svg" /></a>
-  <a href="https://twitter.com/excalidraw">
-    <img alt="Follow Excalidraw on Twitter" src="https://img.shields.io/twitter/follow/excalidraw.svg?label=follow+@excalidraw&style=social&logo=twitter"/></a>
-</p>
+  <h1>✨ Pomai Whiteboard</h1>
+  <p><b>Next-Generation High-Performance Collaborative Whiteboard with C++ WASM Acceleration & Glassmorphism Design System</b></p>
 
-<div align="center">
-  <figure>
-    <a href="https://excalidraw.com" target="_blank" rel="noopener">
-      <img src="https://excalidraw.nyc3.cdn.digitaloceanspaces.com/github%2Fproduct_showcase.png" alt="Product showcase" />
+  <p>
+    <a href="https://github.com/pomagrenate/pomaiwhiteboard/blob/master/LICENSE">
+      <img alt="MIT License" src="https://img.shields.io/badge/license-MIT-violet.svg" />
     </a>
-    <figcaption>
-      <p align="center">
-        Create beautiful hand-drawn like diagrams, wireframes, or whatever you like.
-      </p>
-    </figcaption>
-  </figure>
+    <a href="https://github.com/pomagrenate/pomaiwhiteboard">
+      <img alt="Build Status" src="https://img.shields.io/badge/build-passing-brightgreen.svg" />
+    </a>
+    <a href="https://github.com/pomagrenate/pomaiwhiteboard">
+      <img alt="WASM SIMD Accelerated" src="https://img.shields.io/badge/WASM-SIMD%20Accelerated-7C3AED.svg" />
+    </a>
+  </p>
 </div>
 
-## Features
+---
 
-The Excalidraw editor (npm package) supports:
+## 🚀 Overview
 
-- 💯&nbsp;Free & open-source.
-- 🎨&nbsp;Infinite, canvas-based whiteboard.
-- ✍️&nbsp;Hand-drawn like style.
-- 🌓&nbsp;Dark mode.
-- 🏗️&nbsp;Customizable.
-- 📷&nbsp;Image support.
-- 😀&nbsp;Shape libraries support.
-- 🌐&nbsp;Localization (i18n) support.
-- 🖼️&nbsp;Export to PNG, SVG & clipboard.
-- 💾&nbsp;Open format - export drawings as an `.excalidraw` json file.
-- ⚒️&nbsp;Wide range of tools - rectangle, circle, diamond, arrow, line, free-draw, eraser...
-- ➡️&nbsp;Arrow-binding & labeled arrows.
-- 🔙&nbsp;Undo / Redo.
-- 🔍&nbsp;Zoom and panning support.
+**Pomai Whiteboard** is an enterprise-grade, high-performance virtual canvas built for modern teams and visual engineering. Re-engineered from the ground up, Pomai Whiteboard combines a sleek, modern **Glassmorphism UI** with a custom **C++ WebAssembly (`po_render`)** engine for hardware-accelerated 2D math, spatial indexing, SIMD flood fills, and complex geometry pathfinding.
 
-## Excalidraw.com
+---
 
-The app hosted at [excalidraw.com](https://excalidraw.com) is a minimal showcase of what you can build with Excalidraw. Its [source code](https://github.com/excalidraw/excalidraw/tree/master/excalidraw-app) is part of this repository as well, and the app features:
+## 🔥 Key Features
 
-- 📡&nbsp;PWA support (works offline).
-- 🤼&nbsp;Real-time collaboration.
-- 🔒&nbsp;End-to-end encryption.
-- 💾&nbsp;Local-first support (autosaves to the browser).
-- 🔗&nbsp;Shareable links (export to a readonly link you can share with others).
+### 🎨 Modern Glassmorphism UI & Floating Dock Architecture
+- **Floating Tool Dock**: Pill-shaped floating control bar with dynamic visual glows and stateful feedback.
+- **Unified Header**: Integrated document management, menu navigation, and collaborative user presence.
+- **Glassmorphism Design Tokens**: Ambient backdrop blur filters, sleek translucent surfaces, and custom violet design accents (`#7C3AED`).
 
-We'll be adding these features as drop-in plugins for the npm package in the future.
+### ⚡ C++ WebAssembly SIMD Acceleration (`po_render`)
+- **SIMD-Accelerated Flood Fill**: Near-instantaneous pixel calculations running directly on WebAssembly memory.
+- **Spatial Indexing & R-Tree Querying**: Accelerated element collision, raycasting, and selection hit-testing.
+- **Elbow Arrow Pathfinding**: Dynamic obstacle-avoiding connector routing computed natively in C++.
+- **Scene Graph Transformation**: Fast matrix transformations and path generation for smooth infinite-canvas panning and zooming.
 
-## Quick start
+### 📦 Ecosystem & Native Standards
+- **Native `.pomaiwhiteboard` Canvas**: Encrypted open data format for vector canvas storage.
+- **Native `.pomailib` Library Support**: Seamless component sharing and custom vector library imports.
+- **Local-First & Offline Ready**: Instant auto-saving with offline PWA support.
 
-**Note:** following instructions are for installing the Excalidraw [npm package](https://www.npmjs.com/package/@excalidraw/excalidraw) when integrating Excalidraw into your own app. To run the repository locally for development, please refer to our [Development Guide](https://docs.excalidraw.com/docs/introduction/development).
+---
 
-Use `npm` or `yarn` to install the package.
+## 🛠️ Monorepo Package Architecture
+
+Pomai Whiteboard is structured as a modular TypeScript/C++ monorepo:
+
+| Package | Description |
+| :--- | :--- |
+| `packages/po_render` | Core C++ rendering engine compiled to WebAssembly with Emscripten SIMD support |
+| `packages/element` | Canvas element definitions, WASM bridge loaders, and scene graph logic |
+| `packages/pomaiwhiteboard` | React components, UI layer, floating docks, and theme styling |
+| `pomaiwhiteboard-app` | Production web application entry point & dev server |
+
+---
+
+## 🏁 Quick Start Guide
+
+### Prerequisites
+- **Node.js**: `>= 18.0.0`
+- **Yarn**: `1.22.x`
+- **Emscripten** *(Optional, required only for rebuilding C++ WASM sources)*
+
+### Installation & Running Locally
+
+1. **Clone the repository**:
+   ```bash
+   git clone https://github.com/pomagrenate/pomaiwhiteboard.git
+   cd pomaiwhiteboard/frontend
+   ```
+
+2. **Install dependencies**:
+   ```bash
+   yarn install
+   ```
+
+3. **Build monorepo packages**:
+   ```bash
+   yarn build:packages
+   ```
+
+4. **Start local development server**:
+   ```bash
+   yarn start
+   ```
+   Open `http://localhost:3002/` in your browser.
+
+---
+
+## 🐳 Docker Deployment
+
+To build and run the production container:
 
 ```bash
-npm install react react-dom @excalidraw/excalidraw
-# or
-yarn add react react-dom @excalidraw/excalidraw
+# Build the single-stage Docker container
+docker build -t pomaiwhiteboard:latest .
+
+# Run the container on port 80
+docker run -d -p 80:80 pomaiwhiteboard:latest
 ```
 
-Check out our [documentation](https://docs.excalidraw.com/docs/@excalidraw/excalidraw/installation) for more details!
+---
 
-## Contributing
+## 📄 License
 
-- Missing something or found a bug? [Report here](https://github.com/excalidraw/excalidraw/issues).
-- Want to contribute? Check out our [contribution guide](https://docs.excalidraw.com/docs/introduction/contributing) or let us know on [Discord](https://discord.gg/UexuTaE).
-- Want to help with translations? See the [translation guide](https://docs.excalidraw.com/docs/introduction/contributing#translating).
+Pomai Whiteboard is released under the [MIT License](LICENSE).
 
-## Integrations
-
-- [VScode extension](https://marketplace.visualstudio.com/items?itemName=pomdtr.excalidraw-editor)
-- [npm package](https://www.npmjs.com/package/@excalidraw/excalidraw)
-
-## Who's integrating Excalidraw
-
-[Google Cloud](https://googlecloudcheatsheet.withgoogle.com/architecture) • [Meta](https://meta.com/) • [CodeSandbox](https://codesandbox.io/) • [Obsidian Excalidraw](https://github.com/zsviczian/obsidian-excalidraw-plugin) • [Replit](https://replit.com/) • [Slite](https://slite.com/) • [Notion](https://notion.so/) • [HackerRank](https://www.hackerrank.com/) • and many others
-
-## Sponsors & support
-
-If you like the project, you can become a sponsor at [Open Collective](https://opencollective.com/excalidraw) or use [Excalidraw+](https://plus.excalidraw.com/).
-
-## Thank you for supporting Excalidraw
-
-[<img src="https://opencollective.com/excalidraw/tiers/sponsors/0/avatar.svg?avatarHeight=120"/>](https://opencollective.com/excalidraw/tiers/sponsors/0/website) [<img src="https://opencollective.com/excalidraw/tiers/sponsors/1/avatar.svg?avatarHeight=120"/>](https://opencollective.com/excalidraw/tiers/sponsors/1/website) [<img src="https://opencollective.com/excalidraw/tiers/sponsors/2/avatar.svg?avatarHeight=120"/>](https://opencollective.com/excalidraw/tiers/sponsors/2/website) [<img src="https://opencollective.com/excalidraw/tiers/sponsors/3/avatar.svg?avatarHeight=120"/>](https://opencollective.com/excalidraw/tiers/sponsors/3/website) [<img src="https://opencollective.com/excalidraw/tiers/sponsors/4/avatar.svg?avatarHeight=120"/>](https://opencollective.com/excalidraw/tiers/sponsors/4/website) [<img src="https://opencollective.com/excalidraw/tiers/sponsors/5/avatar.svg?avatarHeight=120"/>](https://opencollective.com/excalidraw/tiers/sponsors/5/website) [<img src="https://opencollective.com/excalidraw/tiers/sponsors/6/avatar.svg?avatarHeight=120"/>](https://opencollective.com/excalidraw/tiers/sponsors/6/website) [<img src="https://opencollective.com/excalidraw/tiers/sponsors/7/avatar.svg?avatarHeight=120"/>](https://opencollective.com/excalidraw/tiers/sponsors/7/website) [<img src="https://opencollective.com/excalidraw/tiers/sponsors/8/avatar.svg?avatarHeight=120"/>](https://opencollective.com/excalidraw/tiers/sponsors/8/website) [<img src="https://opencollective.com/excalidraw/tiers/sponsors/9/avatar.svg?avatarHeight=120"/>](https://opencollective.com/excalidraw/tiers/sponsors/9/website) [<img src="https://opencollective.com/excalidraw/tiers/sponsors/10/avatar.svg?avatarHeight=120"/>](https://opencollective.com/excalidraw/tiers/sponsors/10/website)
-
-<a href="https://opencollective.com/excalidraw#category-CONTRIBUTE" target="_blank"><img src="https://opencollective.com/excalidraw/tiers/backers.svg?avatarHeight=32"/></a>
-
-Last but not least, we're thankful to these companies for offering their services for free:
-
-[![Vercel](./.github/assets/vercel.svg)](https://vercel.com) [![Sentry](./.github/assets/sentry.svg)](https://sentry.io) [![Crowdin](./.github/assets/crowdin.svg)](https://crowdin.com)
