@@ -20,6 +20,7 @@ import type {
   LineSegment,
   LocalPoint,
 } from "./types";
+import { mathCPPEngine } from "./wasm/index";
 
 /**
  * Construct an Ellipse object from the parameters
@@ -53,11 +54,13 @@ export const ellipseIncludesPoint = <Point extends GlobalPoint | LocalPoint>(
   p: Point,
   ellipse: Ellipse<Point>,
 ) => {
-  const { center, halfWidth, halfHeight } = ellipse;
-  const normalizedX = (p[0] - center[0]) / halfWidth;
-  const normalizedY = (p[1] - center[1]) / halfHeight;
-
-  return normalizedX * normalizedX + normalizedY * normalizedY <= 1;
+  return mathCPPEngine.isPointInEllipse(
+    { x: p[0], y: p[1] },
+    { x: ellipse.center[0], y: ellipse.center[1] },
+    ellipse.halfWidth,
+    ellipse.halfHeight,
+    0
+  );
 };
 
 /**

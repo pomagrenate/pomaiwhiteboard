@@ -2,6 +2,7 @@ import { pointsEqual } from "./point";
 import { PRECISION } from "./utils";
 
 import type { GlobalPoint, LocalPoint, Polygon } from "./types";
+import { mathCPPEngine } from "./wasm/index";
 
 export function polygon<Point extends GlobalPoint | LocalPoint>(
   ...points: Point[]
@@ -19,25 +20,10 @@ export const polygonIncludesPoint = <Point extends LocalPoint | GlobalPoint>(
   point: Point,
   polygon: Polygon<Point>,
 ) => {
-  const x = point[0];
-  const y = point[1];
-  let inside = false;
-
-  for (let i = 0, j = polygon.length - 1; i < polygon.length; j = i++) {
-    const xi = polygon[i][0];
-    const yi = polygon[i][1];
-    const xj = polygon[j][0];
-    const yj = polygon[j][1];
-
-    if (
-      ((yi > y && yj <= y) || (yi <= y && yj > y)) &&
-      x < ((xj - xi) * (y - yi)) / (yj - yi) + xi
-    ) {
-      inside = !inside;
-    }
-  }
-
-  return inside;
+  return mathCPPEngine.isPointInPolygon(
+    { x: point[0], y: point[1] },
+    polygon.map((p) => ({ x: p[0], y: p[1] }))
+  );
 };
 
 export const polygonIncludesPointNonZero = <Point extends [number, number]>(

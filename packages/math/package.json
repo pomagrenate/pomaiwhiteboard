@@ -57,8 +57,9 @@
   "bugs": "https://github.com/excalidraw/excalidraw/issues",
   "repository": "https://github.com/excalidraw/excalidraw",
   "scripts": {
+    "build:wasm": "bash build_wasm.sh",
     "gen:types": "rimraf types && tsc",
-    "build:esm": "rimraf dist && node ../../scripts/buildBase.js && yarn gen:types"
+    "build:esm": "yarn build:wasm && rimraf dist && node ../../scripts/buildBase.js && yarn gen:types"
   },
   "dependencies": {
     "@excalidraw/common": "0.18.0"
