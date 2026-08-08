@@ -1,3 +1,5 @@
+import { poRenderEngine, PORenderWasmEngine } from "@excalidraw/common";
+
 export interface PORenderOptions {
   strokeColor: string;
   backgroundColor: string;
@@ -19,6 +21,10 @@ export class PORenderBridge {
 
   public isPORenderActive(): boolean {
     return this.isEnabled;
+  }
+
+  public getEngine(): PORenderWasmEngine {
+    return poRenderEngine;
   }
 
   public drawRectangle(

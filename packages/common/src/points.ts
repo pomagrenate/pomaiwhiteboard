@@ -79,3 +79,14 @@ export const getGridPoint = (
   }
   return pointFrom<GlobalPoint>(x, y);
 };
+
+import { poRenderEngine, Point2D } from "./poRenderWasmBridge";
+
+export const transformPointsWasm = (
+  points: readonly Point2D[],
+  angle: number,
+  cx: number,
+  cy: number,
+): Point2D[] => {
+  return poRenderEngine.transformPoints(points, angle, cx, cy);
+};
