@@ -315,12 +315,221 @@ const drawImagePlaceholder = (
   );
 };
 
+const drawRedPin = (
+  element: NonDeletedExcalidrawElement,
+  context: CanvasRenderingContext2D,
+) => {
+  const w = element.width || 36;
+  const h = element.height || 48;
+
+  context.save();
+
+  // Shadow
+  context.beginPath();
+  context.ellipse(w / 2 + 4, h - 4, Math.max(2, w / 4), 3, 0, 0, Math.PI * 2);
+  context.fillStyle = "rgba(0, 0, 0, 0.25)";
+  context.fill();
+
+  // Needle (Pin Point)
+  context.beginPath();
+  context.moveTo(w / 2, h / 2);
+  context.lineTo(w / 2, h - 4);
+  context.lineWidth = 2.5;
+  context.strokeStyle = "#8d99ae";
+  context.stroke();
+
+  // Outer Pin Head Base
+  context.beginPath();
+  context.ellipse(w / 2, h * 0.42, w * 0.35, h * 0.12, 0, 0, Math.PI * 2);
+  context.fillStyle = "#b7094c";
+  context.fill();
+
+  // 3D Metallic Red Pin Head (Sphere)
+  const cx = w / 2;
+  const cy = h * 0.28;
+  const r = Math.max(6, Math.min(w, h) * 0.26);
+
+  const grad = context.createRadialGradient(
+    cx - r * 0.3,
+    cy - r * 0.3,
+    r * 0.1,
+    cx,
+    cy,
+    r,
+  );
+  grad.addColorStop(0, "#ff758f");
+  grad.addColorStop(0.35, "#d90429");
+  grad.addColorStop(0.85, "#a0001c");
+  grad.addColorStop(1, "#590004");
+
+  context.beginPath();
+  context.arc(cx, cy, r, 0, Math.PI * 2);
+  context.fillStyle = grad;
+  context.fill();
+
+  // Shiny Highlight Spot
+  context.beginPath();
+  context.arc(cx - r * 0.35, cy - r * 0.35, Math.max(1.5, r * 0.25), 0, Math.PI * 2);
+  context.fillStyle = "rgba(255, 255, 255, 0.75)";
+  context.fill();
+
+  context.restore();
+};
+
+const drawRedThread = (
+  element: NonDeletedExcalidrawElement,
+  context: CanvasRenderingContext2D,
+) => {
+  context.save();
+
+  const points = (element as any).points || [
+    [0, 0],
+    [element.width, element.height],
+  ];
+  const p1 = points[0] || [0, 0];
+  const p2 = points[points.length - 1] || [element.width, element.height];
+
+  const dx = p2[0] - p1[0];
+  const dy = p2[1] - p1[1];
+  const midX = (p1[0] + p2[0]) / 2;
+  const sag = Math.max(25, Math.sqrt(dx * dx + dy * dy) * 0.18);
+  const midY = (p1[1] + p2[1]) / 2 + sag;
+
+  // Drop Shadow for thread
+  context.beginPath();
+  context.moveTo(p1[0] + 2, p1[1] + 3);
+  context.quadraticCurveTo(midX + 2, midY + 3, p2[0] + 2, p2[1] + 3);
+  context.lineWidth = 3;
+  context.strokeStyle = "rgba(0, 0, 0, 0.18)";
+  context.stroke();
+
+  // Main Sagging Red Thread Line
+  context.beginPath();
+  context.moveTo(p1[0], p1[1]);
+  context.quadraticCurveTo(midX, midY, p2[0], p2[1]);
+  context.lineWidth = 3.5;
+  context.strokeStyle = "#d90429";
+  context.lineCap = "round";
+  context.stroke();
+
+  // Organic fiber texture overlay
+  context.beginPath();
+  context.moveTo(p1[0], p1[1]);
+  context.quadraticCurveTo(midX, midY, p2[0], p2[1]);
+  context.lineWidth = 1.5;
+  context.strokeStyle = "#ff4d6d";
+  context.setLineDash([4, 4]);
+  context.stroke();
+
+  // Pin knots at ends
+  [p1, p2].forEach(([x, y]) => {
+    context.beginPath();
+    context.arc(x, y, 4.5, 0, Math.PI * 2);
+    context.fillStyle = "#800000";
+    context.fill();
+    context.beginPath();
+    context.arc(x, y, 2.5, 0, Math.PI * 2);
+    context.fillStyle = "#ff758f";
+    context.fill();
+  });
+
+  context.restore();
+};
+
+const drawEvidenceCard = (
+  element: NonDeletedExcalidrawElement,
+  context: CanvasRenderingContext2D,
+) => {
+  const w = element.width || 220;
+  const h = element.height || 260;
+
+  context.save();
+
+  // Outer Shadow
+  context.fillStyle = "rgba(0, 0, 0, 0.12)";
+  context.fillRect(6, 6, w, h);
+
+  // Polaroid Paper Card Base
+  context.fillStyle = "#fcfbf7";
+  context.fillRect(0, 0, w, h);
+
+  // Hand-drawn double outer border
+  context.strokeStyle = "#2b2b2b";
+  context.lineWidth = 1.5;
+  context.strokeRect(0, 0, w, h);
+  context.strokeRect(2, 2, w - 4, h - 4);
+
+  // Photo Cutout Box
+  const margin = 16;
+  const photoW = Math.max(20, w - margin * 2);
+  const photoH = Math.max(20, h * 0.65);
+  context.fillStyle = "#1e1e24";
+  context.fillRect(margin, margin + 8, photoW, photoH);
+  context.strokeStyle = "#4a4e69";
+  context.strokeRect(margin, margin + 8, photoW, photoH);
+
+  // Camera / Clue placeholder icon inside photo cutout box
+  const pcx = w / 2;
+  const pcy = margin + 8 + photoH / 2;
+  context.beginPath();
+  context.arc(pcx, pcy - 4, 18, 0, Math.PI * 2);
+  context.strokeStyle = "#8d99ae";
+  context.lineWidth = 2;
+  context.stroke();
+  context.beginPath();
+  context.arc(pcx, pcy - 4, 8, 0, Math.PI * 2);
+  context.fillStyle = "#8d99ae";
+  context.fill();
+
+  // "EVIDENCE CASE #" handwritten text lines at bottom of polaroid
+  context.fillStyle = "#2b2b2b";
+  context.font = "14px 'Patrick Hand SC', 'Virgil', sans-serif";
+  context.fillText("EVIDENCE NO. #", margin, h - 36);
+
+  context.strokeStyle = "#9d9d9d";
+  context.lineWidth = 1;
+  context.beginPath();
+  context.moveTo(margin, h - 22);
+  context.lineTo(w - margin, h - 22);
+  context.stroke();
+
+  // Red Pin Attached at Top Center
+  const pinX = w / 2;
+  const pinY = 4;
+  context.beginPath();
+  context.arc(pinX, pinY, 6, 0, Math.PI * 2);
+  context.fillStyle = "#d90429";
+  context.fill();
+  context.beginPath();
+  context.arc(pinX - 2, pinY - 2, 2, 0, Math.PI * 2);
+  context.fillStyle = "#ff758f";
+  context.fill();
+
+  context.restore();
+};
+
 const drawElementOnCanvas = (
   element: NonDeletedExcalidrawElement,
   rc: RoughCanvas,
   context: CanvasRenderingContext2D,
   renderConfig: StaticCanvasRenderConfig,
 ) => {
+  if (element.customData?.customType) {
+    const customType = element.customData.customType;
+    if (customType === "red-pin") {
+      drawRedPin(element, context);
+      return;
+    }
+    if (customType === "red-string") {
+      drawRedThread(element, context);
+      return;
+    }
+    if (customType === "evidence-card") {
+      drawEvidenceCard(element, context);
+      return;
+    }
+  }
+
   switch (element.type) {
     case "rectangle":
     case "iframe":

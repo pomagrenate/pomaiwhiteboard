@@ -1,23 +1,17 @@
+version: '3.8'
+
 services:
-  excalidraw:
+  pomaiwhiteboard-frontend:
     build:
       context: .
-      args:
-        - NODE_ENV=development
-    container_name: excalidraw
+      dockerfile: Dockerfile
+    container_name: pomaiwhiteboard-frontend
     ports:
-      - "3000:80"
-    restart: on-failure
-    stdin_open: true
-    healthcheck:
-      disable: true
-    environment:
-      - NODE_ENV=development
-    volumes:
-      - ./:/opt/node_app/app:delegated
-      - ./package.json:/opt/node_app/package.json
-      - ./yarn.lock:/opt/node_app/yarn.lock
-      - notused:/opt/node_app/app/node_modules
+      - "3003:80"
+    restart: always
+    networks:
+      - pomaieco_network
 
-volumes:
-  notused:
+networks:
+  pomaieco_network:
+    external: true

@@ -36,9 +36,33 @@ export const FONT_METADATA: Record<number, FontMetadata> = {
   [FONT_FAMILY.Excalifont]: {
     metrics: {
       unitsPerEm: 1000,
-      ascender: 886,
-      descender: -374,
+      ascender: 900,
+      descender: -300,
       lineHeight: 1.25,
+    },
+  },
+  [FONT_FAMILY["Architects Daughter"]]: {
+    metrics: {
+      unitsPerEm: 1000,
+      ascender: 900,
+      descender: -300,
+      lineHeight: 1.25,
+    },
+  },
+  [FONT_FAMILY["Indie Flower"]]: {
+    metrics: {
+      unitsPerEm: 1000,
+      ascender: 900,
+      descender: -300,
+      lineHeight: 1.25,
+    },
+  },
+  [FONT_FAMILY["Patrick Hand SC"]]: {
+    metrics: {
+      unitsPerEm: 1000,
+      ascender: 900,
+      descender: -300,
+      lineHeight: 1.2,
     },
   },
   [FONT_FAMILY.Nunito]: {
@@ -68,11 +92,10 @@ export const FONT_METADATA: Record<number, FontMetadata> = {
   [FONT_FAMILY.Virgil]: {
     metrics: {
       unitsPerEm: 1000,
-      ascender: 886,
-      descender: -374,
+      ascender: 900,
+      descender: -300,
       lineHeight: 1.25,
     },
-    deprecated: true,
   },
   [FONT_FAMILY.Helvetica]: {
     metrics: {
@@ -86,12 +109,11 @@ export const FONT_METADATA: Record<number, FontMetadata> = {
   },
   [FONT_FAMILY.Cascadia]: {
     metrics: {
-      unitsPerEm: 2048,
-      ascender: 1900,
-      descender: -480,
+      unitsPerEm: 1000,
+      ascender: 900,
+      descender: -300,
       lineHeight: 1.2,
     },
-    deprecated: true,
   },
   [FONT_FAMILY["Liberation Sans"]]: {
     metrics: {
@@ -104,13 +126,14 @@ export const FONT_METADATA: Record<number, FontMetadata> = {
   },
   [FONT_FAMILY.Assistant]: {
     metrics: {
-      unitsPerEm: 2048,
-      ascender: 1021,
-      descender: -287,
+      unitsPerEm: 1000,
+      ascender: 900,
+      descender: -300,
       lineHeight: 1.25,
     },
     private: true,
   },
+
   [FONT_FAMILY_FALLBACKS.Xiaolai]: {
     metrics: {
       unitsPerEm: 1000,

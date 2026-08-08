@@ -79,9 +79,14 @@ const getConfig = (outdir) => ({
     "@excalidraw/element",
     "@excalidraw/math",
     "@excalidraw/fractional-indexing",
+    "*.ttf",
+    "*.woff2",
+    "/*.ttf",
+    "/*.woff2",
   ],
   loader: {
     ".woff2": "file",
+    ".ttf": "file",
   },
 });
 

@@ -23,11 +23,11 @@ export default defineConfig({
       },
       {
         find: /^@excalidraw\/excalidraw$/,
-        replacement: path.resolve(__dirname, "./packages/excalidraw/index.tsx"),
+        replacement: path.resolve(__dirname, "./packages/pomaiwhiteboard/index.tsx"),
       },
       {
         find: /^@excalidraw\/excalidraw\/(.*?)/,
-        replacement: path.resolve(__dirname, "./packages/excalidraw/$1"),
+        replacement: path.resolve(__dirname, "./packages/pomaiwhiteboard/$1"),
       },
       {
         find: /^@excalidraw\/math$/,

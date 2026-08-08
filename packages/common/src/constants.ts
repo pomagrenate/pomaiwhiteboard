@@ -9,7 +9,7 @@ import { COLOR_PALETTE } from "./colors";
 export const supportsResizeObserver =
   typeof window !== "undefined" && "ResizeObserver" in window;
 
-export const APP_NAME = "Excalidraw";
+export const APP_NAME = "Pomai Whiteboard";
 
 // distance when creating text before it's considered `autoResize: false`
 // we're using higher threshold so that clicks that end up being drags
@@ -77,7 +77,7 @@ export enum EVENT {
   VISIBILITY_CHANGE = "visibilitychange",
   SCROLL = "scroll",
   // custom events
-  EXCALIDRAW_LINK = "excalidraw-link",
+  EXCALIDRAW_LINK = "pomaiwhiteboard-link",
   MENU_ITEM_SELECT = "menu.itemSelect",
   MESSAGE = "message",
   FULLSCREENCHANGE = "fullscreenchange",
@@ -138,6 +138,9 @@ export const FONT_FAMILY = {
   "Comic Shanns": 8,
   "Liberation Sans": 9,
   Assistant: 10,
+  "Architects Daughter": 11,
+  "Indie Flower": 12,
+  "Patrick Hand SC": 13,
 };
 
 // Segoe UI Emoji fails to properly fallback for some glyphs: ∞, ∫, ≠
@@ -162,12 +165,14 @@ export function getGenericFontFamilyFallback(
   switch (fontFamily) {
     case FONT_FAMILY.Cascadia:
     case FONT_FAMILY["Comic Shanns"]:
+    case FONT_FAMILY["Patrick Hand SC"]:
       return MONOSPACE_GENERIC_FONT;
 
     default:
       return SANS_SERIF_GENERIC_FONT;
   }
 }
+
 
 export const getFontFamilyFallbacks = (
   fontFamily: number,
@@ -250,6 +255,10 @@ export const STRING_MIME_TYPES = {
   text: "text/plain",
   html: "text/html",
   json: "application/json",
+  // pomaiwhiteboard data
+  pomaiwhiteboard: "application/vnd.pomaiwhiteboard+json",
+  pomaiwhiteboardlib: "application/vnd.pomaiwhiteboardlib+json",
+  pomailib: "application/vnd.pomailib+json",
   // excalidraw data
   excalidraw: "application/vnd.excalidraw+json",
   excalidrawClipboard: "application/vnd.excalidraw.clipboard+json",
@@ -283,6 +292,9 @@ export const EXPORT_IMAGE_TYPES = {
 } as const;
 
 export const EXPORT_DATA_TYPES = {
+  pomaiwhiteboard: "pomaiwhiteboard",
+  pomaiwhiteboardLibrary: "pomaiwhiteboardlib",
+  pomaiLibrary: "pomailib",
   excalidraw: "excalidraw",
   excalidrawClipboard: "excalidraw/clipboard",
   excalidrawLibrary: "excalidrawlib",
@@ -290,7 +302,7 @@ export const EXPORT_DATA_TYPES = {
 } as const;
 
 export const getExportSource = () =>
-  window.EXCALIDRAW_EXPORT_SOURCE || window.location.origin;
+  window.POMAIWHITEBOARD_EXPORT_SOURCE || window.EXCALIDRAW_EXPORT_SOURCE || window.location.origin;
 
 // time in milliseconds
 export const IMAGE_RENDER_TIMEOUT = 500;
@@ -504,7 +516,7 @@ export const TOOL_TYPE = {
 } as const;
 
 export const EDITOR_LS_KEYS = {
-  OAI_API_KEY: "excalidraw-oai-api-key",
+  OAI_API_KEY: "pomaiwhiteboard-oai-api-key",
   // legacy naming (non)scheme
   MERMAID_TO_EXCALIDRAW: "mermaid-to-excalidraw",
   PUBLISH_LIBRARY: "publish-library-data",
