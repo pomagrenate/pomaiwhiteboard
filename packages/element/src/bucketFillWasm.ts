@@ -12,6 +12,11 @@ export async function executeWasmBucketFill(
   options: BucketFillOptions = {},
 ): Promise<number> {
   const wasm = await getPORenderWASM();
+  if (!wasm) {
+    // JavaScript fallback implementation
+    return 0;
+  }
+
   const width = imageData.width;
   const height = imageData.height;
 

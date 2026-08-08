@@ -32,21 +32,50 @@ export interface PORenderWASMInstance {
 }
 
 let wasmInstance: PORenderWASMInstance | null = null;
-let initPromise: Promise<PORenderWASMInstance> | null = null;
+let initPromise: Promise<PORenderWASMInstance | null> | null = null;
 
 /**
- * Initializes and returns the compiled C++ WASM module instance.
+ * Validates WebAssembly support in the current runtime environment.
  */
-export async function getPORenderWASM(): Promise<PORenderWASMInstance> {
+export function isWasmSupported(): boolean {
+  try {
+    if (typeof WebAssembly === "object" && typeof WebAssembly.instantiate === "function") {
+      const module = new WebAssembly.Module(
+        Uint8Array.of(0x00, 0x61, 0x73, 0x6d, 0x01, 0x00, 0x00, 0x00)
+      );
+      return module instanceof WebAssembly.Module;
+    }
+  } catch (e) {
+    return false;
+  }
+  return false;
+}
+
+/**
+ * Initializes and returns the compiled C++ WASM module instance with graceful fallback.
+ */
+export async function getPORenderWASM(): Promise<PORenderWASMInstance | null> {
+  if (!isWasmSupported()) {
+    console.warn("[po_render] WebAssembly is not supported on this browser/environment. Using JavaScript fallback.");
+    return null;
+  }
+
   if (wasmInstance) {
     return wasmInstance;
   }
+
   if (!initPromise) {
     initPromise = (async () => {
-      const mod = await PORenderModule();
-      wasmInstance = mod as unknown as PORenderWASMInstance;
-      return wasmInstance;
+      try {
+        const mod = await PORenderModule();
+        wasmInstance = mod as unknown as PORenderWASMInstance;
+        return wasmInstance;
+      } catch (err) {
+        console.warn("[po_render] Failed to load WASM binary. Falling back to JavaScript engine:", err);
+        return null;
+      }
     })();
   }
+
   return initPromise;
 }
