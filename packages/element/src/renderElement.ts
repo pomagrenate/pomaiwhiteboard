@@ -67,6 +67,7 @@ import { getContainingFrame } from "./frame";
 import { getCornerRadius } from "./utils";
 
 import { ShapeCache } from "./shape";
+import { globalPORenderBridge, type PORenderOptions } from "./poRenderBridge";
 
 import type {
   ExcalidrawElement,
@@ -539,7 +540,48 @@ const drawElementOnCanvas = (
       context.lineJoin = "round";
       context.lineCap = "round";
 
-      rc.draw(ShapeCache.generateElementShape(element, renderConfig));
+      if (globalPORenderBridge.isPORenderActive()) {
+        const options: PORenderOptions = {
+          strokeColor: applyDarkModeFilter(
+            element.strokeColor,
+            renderConfig.theme === THEME.DARK,
+          ),
+          backgroundColor: applyDarkModeFilter(
+            element.backgroundColor,
+            renderConfig.theme === THEME.DARK,
+          ),
+          strokeWidth: element.strokeWidth,
+          roughness: element.roughness,
+          fillStyle: element.fillStyle,
+        };
+
+        if (element.type === "ellipse") {
+          globalPORenderBridge.drawEllipse(
+            context,
+            element.width / 2,
+            element.height / 2,
+            element.width / 2,
+            element.height / 2,
+            options,
+          );
+        } else if (element.type === "diamond") {
+          // A diamond in Excalidraw is basically a rotated rectangle or custom path
+          // For simplicity, we draw the path manually on the context 
+          // or fallback to RoughJS if po_render doesn't support paths yet.
+          rc.draw(ShapeCache.generateElementShape(element, renderConfig));
+        } else {
+          globalPORenderBridge.drawRectangle(
+            context,
+            0,
+            0,
+            element.width,
+            element.height,
+            options,
+          );
+        }
+      } else {
+        rc.draw(ShapeCache.generateElementShape(element, renderConfig));
+      }
       break;
     }
     case "arrow":
@@ -547,11 +589,48 @@ const drawElementOnCanvas = (
       context.lineJoin = "round";
       context.lineCap = "round";
 
-      ShapeCache.generateElementShape(element, renderConfig).forEach(
-        (shape) => {
-          rc.draw(shape);
-        },
-      );
+      if (globalPORenderBridge.isPORenderActive()) {
+        const options: PORenderOptions = {
+          strokeColor: applyDarkModeFilter(
+            element.strokeColor,
+            renderConfig.theme === THEME.DARK,
+          ),
+          backgroundColor: applyDarkModeFilter(
+            element.backgroundColor,
+            renderConfig.theme === THEME.DARK,
+          ),
+          strokeWidth: element.strokeWidth,
+          roughness: element.roughness,
+        };
+
+        const points = element.points;
+        if (points.length >= 2) {
+          for (let i = 0; i < points.length - 1; i++) {
+            globalPORenderBridge.drawLine(
+              context,
+              points[i][0],
+              points[i][1],
+              points[i + 1][0],
+              points[i + 1][1],
+              options,
+            );
+          }
+        }
+        
+        // Render arrowheads via roughjs fallback for now until po_render supports it
+        const shapes = ShapeCache.generateElementShape(element, renderConfig);
+        if (shapes.length > 1) { // 1st shape is the line, subsequent are arrowheads
+          for (let i = 1; i < shapes.length; i++) {
+            rc.draw(shapes[i]);
+          }
+        }
+      } else {
+        ShapeCache.generateElementShape(element, renderConfig).forEach(
+          (shape) => {
+            rc.draw(shape);
+          },
+        );
+      }
       break;
     }
     case "freedraw": {
