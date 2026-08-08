@@ -1,0 +1,8 @@
+{
+  "typescript.validate.enable": true,
+  "javascript.validate.enable": true,
+  "typescript.preferences.includePackageJsonAutoImports": "off",
+  "search.exclude": {
+    "**/packages/po_render/modules": true
+  }
+}
