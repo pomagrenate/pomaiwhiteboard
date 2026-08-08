@@ -5,18 +5,18 @@ import styles from "./styles.module.css";
 
 const FeatureList = [
   {
-    title: "Learn how Excalidraw works",
+    title: "Learn how Pomai Whiteboard works",
     Svg: require("@site/static/img/undraw_innovative.svg").default,
     description: (
-      <>Want to contribute to Excalidraw but got lost in the codebase?</>
+      <>Want to contribute to Pomai Whiteboard but got lost in the codebase?</>
     ),
   },
   {
-    title: "Integrate Excalidraw",
+    title: "Integrate Pomai Whiteboard",
     Svg: require("@site/static/img/undraw_blank_canvas.svg").default,
     description: (
       <>
-        Want to build your own app powered by Excalidraw but don't know where to
+        Want to build your own app powered by Pomai Whiteboard but don't know where to
         start?
       </>
     ),

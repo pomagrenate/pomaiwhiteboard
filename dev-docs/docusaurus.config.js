@@ -8,16 +8,16 @@ process.env.IS_PREACT = "false";
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: "Excalidraw developer docs",
+  title: "Pomai Whiteboard Developer Docs",
   tagline:
-    "For Excalidraw contributors or those integrating the Excalidraw editor",
-  url: "https://docs.excalidraw.com",
+    "For Pomai Whiteboard contributors or those integrating the Pomai Whiteboard engine",
+  url: "https://github.com/pomagrenate/pomaiwhiteboard",
   baseUrl: "/",
-  onBrokenLinks: "throw",
+  onBrokenLinks: "warn",
   onBrokenMarkdownLinks: "warn",
   favicon: "img/favicon.png",
-  organizationName: "Excalidraw", // Usually your GitHub org/user name.
-  projectName: "excalidraw", // Usually your repo name.
+  organizationName: "pomagrenate", // Usually your GitHub org/user name.
+  projectName: "pomaiwhiteboard", // Usually your repo name.
 
   // Even if you don't use internalization, you can use this field to set useful
   // metadata like html lang. For example, if your site is Chinese, you may want
@@ -36,7 +36,7 @@ const config = {
           sidebarPath: require.resolve("./sidebars.js"),
           // Please change this to your repo.
           editUrl:
-            "https://github.com/excalidraw/excalidraw/tree/master/dev-docs/",
+            "https://github.com/pomagrenate/pomaiwhiteboard/tree/master/dev-docs/",
           showLastUpdateAuthor: true,
           showLastUpdateTime: true,
         },
@@ -54,9 +54,9 @@ const config = {
         respectPrefersColorScheme: true,
       },
       navbar: {
-        title: "Excalidraw",
+        title: "Pomai Whiteboard",
         logo: {
-          alt: "Excalidraw Logo",
+          alt: "Pomai Whiteboard Logo",
           src: "img/logo.svg",
         },
         items: [
@@ -66,12 +66,7 @@ const config = {
             label: "Docs",
           },
           {
-            to: "https://plus.excalidraw.com/blog",
-            label: "Blog",
-            position: "left",
-          },
-          {
-            to: "https://github.com/excalidraw/excalidraw",
+            to: "https://github.com/pomagrenate/pomaiwhiteboard",
             label: "GitHub",
             position: "right",
           },
@@ -90,37 +85,16 @@ const config = {
             ],
           },
           {
-            title: "Community",
+            title: "Repository",
             items: [
-              {
-                label: "Discord",
-                href: "https://discord.gg/UexuTaE",
-              },
-              {
-                label: "𝕏",
-                href: "https://x.com/excalidraw",
-              },
-              {
-                label: "Linkedin",
-                href: "https://www.linkedin.com/company/excalidraw",
-              },
-            ],
-          },
-          {
-            title: "More",
-            items: [
-              {
-                label: "Blog",
-                to: "https://plus.excalidraw.com/blog",
-              },
               {
                 label: "GitHub",
-                to: "https://github.com/excalidraw/excalidraw",
+                to: "https://github.com/pomagrenate/pomaiwhiteboard",
               },
             ],
           },
         ],
-        copyright: `Copyright © 2023 Excalidraw community. Built with Docusaurus ❤️`,
+        copyright: `Copyright © 2026 Pomai Whiteboard. Built with Docusaurus ❤️`,
       },
       prism: {
         theme: require("prism-react-renderer/themes/dracula"),
