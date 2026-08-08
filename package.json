@@ -61,7 +61,7 @@
     "build:laser-pointer": "yarn --cwd ./packages/laser-pointer build:esm",
     "build:packages": "yarn build:common && yarn build:fractional-indexing && yarn build:laser-pointer && yarn build:math && yarn build:element && yarn build:pomaiwhiteboard",
     "build:version": "yarn --cwd ./pomaiwhiteboard-app build:version",
-    "build": "yarn --cwd ./pomaiwhiteboard-app build",
+    "build": "yarn build:wasm && yarn build:packages && yarn --cwd ./pomaiwhiteboard-app build",
     "build:preview": "yarn --cwd ./pomaiwhiteboard-app build:preview",
     "start": "yarn --cwd ./pomaiwhiteboard-app start",
     "start:production": "yarn --cwd ./pomaiwhiteboard-app start:production",
