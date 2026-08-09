@@ -1,11 +1,13 @@
 *
+!.git
+!.github
 !.env.development
 !.env.production
 !.eslintrc.json
 !.npmrc
 !.prettierrc
-!excalidraw-app/
-!excalidraw-app/build/
+!pomaiwhiteboard-app/
+!pomaiwhiteboard-app/build/
 !package.json
 !public/
 !packages/

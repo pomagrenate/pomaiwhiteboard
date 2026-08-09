@@ -1,33 +1,48 @@
-# Stage 1: Build stage
 FROM node:18-alpine AS builder
 
 WORKDIR /app
 
-# Install emscripten & build tools if building WASM from scratch
-RUN apk add --no-exe bash build-base emscripten
+# Install build tools needed for node-gyp and emscripten
+RUN apk add --no-cache bash build-base python3 make g++ git curl \
+    && git clone https://github.com/emscripten-core/emsdk.git /opt/emsdk \
+    && cd /opt/emsdk \
+    && ./emsdk install 3.1.51 \
+    && ./emsdk activate 3.1.51
 
-COPY package.json yarn.lock ./
-COPY packages ./packages
-COPY pomaiwhiteboard-app ./pomaiwhiteboard-app
+ENV PATH="/opt/emsdk:/opt/emsdk/upstream/emscripten:${PATH}"
+COPY . .
 
+# Install dependencies (workspaces will be honored)
 RUN yarn install --frozen-lockfile
+
+# Build frontend and shared packages
 RUN yarn build
 
-# Stage 2: Production Nginx stage
-FROM nginx:alpine-slim
+# Build backend API
+RUN yarn build:api
 
-COPY --from=builder /app/pomaiwhiteboard-app/build /usr/share/nginx/html
+# ---------------------------------------------------------------------------
+# Stage 2: Production
+# ---------------------------------------------------------------------------
+FROM node:20-alpine AS production
 
-RUN echo 'server { \
-    listen 80; \
-    server_name localhost; \
-    location / { \
-        root /usr/share/nginx/html; \
-        index index.html index.htm; \
-        try_files $uri $uri/ /index.html; \
-    } \
-}' > /etc/nginx/conf.d/default.conf
+WORKDIR /app
 
-EXPOSE 80
+# Copy the necessary config files
+COPY --from=builder /app/package.json /app/yarn.lock ./
 
-CMD ["nginx", "-g", "daemon off;"]
+# Copy packages and node_modules from the builder stage
+# We keep node_modules to preserve the yarn workspace symlinks
+COPY --from=builder /app/packages ./packages
+COPY --from=builder /app/node_modules ./node_modules
+
+# Copy the built frontend into a public directory
+COPY --from=builder /app/pomaiwhiteboard-app/build /app/public
+
+EXPOSE 3010
+
+ENV FRONTEND_STATIC_PATH=/app/public
+ENV NODE_ENV=production
+
+# Start the backend server (which now also serves the frontend)
+CMD ["node", "packages/api/dist/presentation/server.js"]
